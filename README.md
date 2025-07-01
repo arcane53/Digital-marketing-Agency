@@ -1,5 +1,5 @@
 # Digital-marketing-Agency
-## Digital Marketing Agency Website
+
 This is a simple, single-page application (SPA) style website for a digital marketing agency, built with pure HTML, CSS (Tailwind CSS), and JavaScript. It features a responsive design, dynamic page loading, and simulated analytics tracking for various user interactions.
 
 Table of Contents
