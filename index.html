@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Marketing Agency</title>
+    <title>IgniteGrowth Digital</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -199,7 +199,7 @@
     <!-- Header -->
     <header class="header">
         <nav class="container flex justify-between items-center">
-            <div class="text-2xl font-bold rounded-lg p-2">DigitalMarkPro</div>
+            <div class="text-2xl font-bold rounded-lg p-2">IgniteGrowth Digital</div>
             <ul class="flex">
                 <li><a href="#" class="nav-link active" data-page="landing">Home</a></li>
                 <li><a href="#" class="nav-link" data-page="services">Services</a></li>
@@ -216,17 +216,41 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 DigitalMarkPro. All rights reserved.</p>
+            <p>&copy; 2024 IgniteGrowth Digital. All rights reserved.</p>
         </div>
     </footer>
 
     <!-- Thank You Modal -->
     <div id="thank-you-modal" class="modal-overlay">
         <div class="modal-content relative">
-            <button class="close-button" onclick="closeModal()">&times;</button>
+            <button class="close-button" onclick="closeModal('thank-you-modal')">&times;</button>
             <h2 class="text-3xl font-bold text-gray-900 mb-4">Thank You!</h2>
             <p class="text-lg text-gray-700 mb-6">Your message has been successfully sent. We will get back to you shortly.</p>
-            <button class="btn-primary" onclick="closeModal()">Close</button>
+            <button class="btn-primary" onclick="closeModal('thank-you-modal')">Close</button>
+        </div>
+    </div>
+
+    <!-- Inquiry Form Modal -->
+    <div id="inquiry-modal" class="modal-overlay">
+        <div class="modal-content relative">
+            <button class="close-button" onclick="closeModal('inquiry-modal')">&times;</button>
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Inquire About Our Services</h2>
+            <p class="text-lg text-gray-700 mb-6">Tell us about your needs, and we'll get in touch!</p>
+            <form id="inquiry-form" onsubmit="handleFormSubmission(event, 'inquiry-modal')">
+                <div class="mb-4">
+                    <label for="inquiry-name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
+                    <input type="text" id="inquiry-name" name="name" placeholder="Your Name" required class="rounded-lg">
+                </div>
+                <div class="mb-4">
+                    <label for="inquiry-email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+                    <input type="email" id="inquiry-email" name="email" placeholder="your.email@example.com" required class="rounded-lg">
+                </div>
+                <div class="mb-4">
+                    <label for="inquiry-message" class="block text-gray-700 text-sm font-bold mb-2">Message:</label>
+                    <textarea id="inquiry-message" name="message" rows="5" placeholder="Tell us about your project or questions..." required class="rounded-lg"></textarea>
+                </div>
+                <button type="submit" class="btn-primary w-full">Submit Inquiry</button>
+            </form>
         </div>
     </div>
 
@@ -252,7 +276,7 @@
                         We are a leading digital marketing agency dedicated to helping businesses thrive in the digital landscape.
                         From SEO to social media, we've got you covered.
                     </p>
-                    <a href="javascript:void(0)" class="btn-primary track-cta" data-cta-name="Learn More Home" onclick="trackCTA('Learn More Home'); loadPage('services', 'download-section');">Learn More About Our Services</a>
+                    <a href="javascript:void(0)" class="btn-primary track-cta" data-cta-name="Learn More Home" onclick="trackCTA('Learn More Home'); showModal('inquiry-modal');">Learn More About Our Services</a>
                 </section>
 
                 <section class="py-12 bg-gray-50 rounded-lg p-6 mt-8">
@@ -280,39 +304,39 @@
                         <div class="bg-white p-6 rounded-lg shadow-md">
                             <h3 class="text-2xl font-semibold text-gray-800 mb-3">Search Engine Optimization (SEO)</h3>
                             <p class="text-gray-700 mb-4">Improve your search engine rankings and drive organic traffic to your website.</p>
-                            <a href="#" class="btn-primary track-cta" data-cta-name="SEO Details" onclick="trackCTA('SEO Details')">Learn More</a>
+                            <a href="javascript:void(0)" class="btn-primary track-cta" data-cta-name="SEO Details" onclick="trackCTA('SEO Details'); loadPage('services', 'download-section');">Learn More</a>
                         </div>
                         <div class="bg-white p-6 rounded-lg shadow-md">
                             <h3 class="text-2xl font-semibold text-gray-800 mb-3">Social Media Marketing</h3>
                             <p class="text-gray-700 mb-4">Engage your audience, build brand awareness, and generate leads on social platforms.</p>
-                            <a href="#" class="btn-primary track-cta" data-cta-name="SMM Details" onclick="trackCTA('SMM Details')">Learn More</a>
+                            <a href="javascript:void(0)" class="btn-primary track-cta" data-cta-name="SMM Details" onclick="trackCTA('SMM Details'); loadPage('services', 'download-section');">Learn More</a>
                         </div>
                         <div class="bg-white p-6 rounded-lg shadow-md">
                             <h3 class="text-2xl font-semibold text-gray-800 mb-3">Pay-Per-Click (PPC) Advertising</h3>
                             <p class="text-gray-700 mb-4">Maximize your ROI with targeted ad campaigns on Google, Bing, and social channels.</p>
-                            <a href="#" class="btn-primary track-cta" data-cta-name="PPC Details" onclick="trackCTA('PPC Details')">Learn More</a>
+                            <a href="javascript:void(0)" class="btn-primary track-cta" data-cta-name="PPC Details" onclick="trackCTA('PPC Details'); loadPage('services', 'download-section');">Learn More</a>
                         </div>
                         <div class="bg-white p-6 rounded-lg shadow-md">
                             <h3 class="text-2xl font-semibold text-gray-800 mb-3">Content Marketing</h3>
                             <p class="text-gray-700 mb-4">Create compelling content that attracts, engages, and converts your target audience.</p>
-                            <a href="#" class="btn-primary track-cta" data-cta-name="Content Marketing Details" onclick="trackCTA('Content Marketing Details')">Learn More</a>
+                            <a href="javascript:void(0)" class="btn-primary track-cta" data-cta-name="Content Marketing Details" onclick="trackCTA('Content Marketing Details'); loadPage('services', 'download-section');">Learn More</a>
                         </div>
                         <div class="bg-white p-6 rounded-lg shadow-md">
                             <h3 class="text-2xl font-semibold text-gray-800 mb-3">Email Marketing</h3>
                             <p class="text-gray-700 mb-4">Build strong customer relationships and drive sales with effective email campaigns.</p>
-                            <a href="#" class="btn-primary track-cta" data-cta-name="Email Marketing Details" onclick="trackCTA('Email Marketing Details')">Learn More</a>
+                            <a href="javascript:void(0)" class="btn-primary track-cta" data-cta-name="Email Marketing Details" onclick="trackCTA('Email Marketing Details'); loadPage('services', 'download-section');">Learn More</a>
                         </div>
                         <div class="bg-white p-6 rounded-lg shadow-md">
                             <h3 class="text-2xl font-semibold text-gray-800 mb-3">Web Design & Development</h3>
                             <p class="text-gray-700 mb-4">Craft stunning, user-friendly websites optimized for performance and conversions.</p>
-                            <a href="#" class="btn-primary track-cta" data-cta-name="Web Design Details" onclick="trackCTA('Web Design Details')">Learn More</a>
+                            <a href="javascript:void(0)" class="btn-primary track-cta" data-cta-name="Web Design Details" onclick="trackCTA('Web Design Details'); loadPage('services', 'download-section');">Learn More</a>
                         </div>
                     </div>
                 </section>
                 <section id="download-section" class="py-8 text-center">
                     <h2 class="text-3xl font-bold text-gray-800 mb-4">Download Our Full Brochure</h2>
                     <p class="text-lg text-gray-700 mb-6">Get detailed information about all our services in one comprehensive document.</p>
-                    <a href="/sample-brochure" target="_blank" class="btn-primary track-download" data-download-name="Company Brochure" onclick="trackDownload('Company Brochure')">Download Brochure (HTML)</a>
+                    <a href="uploaded:digital marketing.pdf" target="_blank" class="btn-primary track-download" data-download-name="Company Brochure" onclick="trackDownload('Company Brochure')">Download Brochure (PDF)</a>
                 </section>
             `,
             contact: `
@@ -322,7 +346,7 @@
                         <p class="text-lg text-gray-700 mb-6 text-center">
                             Have questions or ready to start your digital journey? Fill out the form below!
                         </p>
-                        <form id="contact-form" onsubmit="handleFormSubmission(event)">
+                        <form id="contact-form" onsubmit="handleFormSubmission(event, 'contact-form')">
                             <div class="mb-4">
                                 <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
                                 <input type="text" id="name" name="name" placeholder="Your Name" required class="rounded-lg">
@@ -345,6 +369,7 @@
         const mainContentDiv = document.getElementById('main-content');
         const navLinks = document.querySelectorAll('.nav-link');
         const thankYouModal = document.getElementById('thank-you-modal');
+        const inquiryModal = document.getElementById('inquiry-modal'); // New inquiry modal
         const backToTopBtn = document.getElementById('back-to-top');
         const loadingIndicator = document.getElementById('loading-indicator');
         let currentPagePath = '/'; // Simulate current page path
@@ -411,7 +436,7 @@
         }
 
         // Track Form Submissions
-        function handleFormSubmission(event) {
+        function handleFormSubmission(event, formId) {
             event.preventDefault(); // Prevent default form submission
             const form = event.target;
             const name = form.name.value;
@@ -423,8 +448,8 @@
 
             gtag('event', 'form_submission', {
                 event_category: 'Lead Generation',
-                event_label: 'Contact Us Form',
-                form_name: 'Contact Form',
+                event_label: formId === 'contact-form' ? 'Contact Us Form' : 'Inquiry Form',
+                form_name: formId,
                 page_path: currentPagePath,
                 // You might send more data here, but be mindful of PII
                 // user_name: name,
@@ -432,16 +457,17 @@
             });
 
             form.reset(); // Clear the form
-            showModal(); // Show the thank you modal
+            closeModal(formId === 'contact-form' ? 'contact-modal' : 'inquiry-modal'); // Close the specific form modal
+            showModal('thank-you-modal'); // Show the thank you modal
         }
 
         // Show/Hide Modal
-        function showModal() {
-            thankYouModal.classList.add('show');
+        function showModal(modalId) {
+            document.getElementById(modalId).classList.add('show');
         }
 
-        function closeModal() {
-            thankYouModal.classList.remove('show');
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
         }
 
 
@@ -450,7 +476,7 @@
             gtag('event', 'file_download', {
                 event_category: 'Engagement',
                 event_label: fileName,
-                file_extension: 'html', // Changed to HTML to reflect opening the HTML brochure
+                file_extension: 'pdf', // Changed to PDF
                 page_path: currentPagePath
             });
             // The actual download is now handled by the href attribute of the anchor tag.
