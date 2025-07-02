@@ -19,560 +19,227 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* Light blue-gray background */
-            color: #333;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            scroll-behavior: smooth; /* Smooth scrolling for navigation */
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem;
-        }
-        .header {
-            background-color: #1a202c; /* Dark blue-gray */
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            position: sticky; /* Make header sticky */
-            top: 0;
-            z-index: 1000; /* Ensure it stays on top */
-        }
-        .nav-link {
-            padding: 0.5rem 1rem;
-            margin: 0 0.5rem;
-            border-radius: 0.5rem;
-            transition: background-color 0.3s ease;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        .nav-link:hover {
-            background-color: #2d3748; /* Slightly lighter dark blue-gray */
-        }
+        /* Custom styles for active navigation link */
         .nav-link.active {
-            background-color: #4a5568; /* Even lighter dark blue-gray */
-        }
-        .main-content {
-            flex-grow: 1;
-            background-color: white;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            padding: 2rem;
-            margin-top: 1.5rem;
-            margin-bottom: 1.5rem;
-            opacity: 0; /* Start hidden for fade-in */
-            transition: opacity 0.5s ease-in-out; /* Fade-in transition */
-        }
-        .main-content.show {
-            opacity: 1; /* Show content */
-        }
-        .footer {
-            background-color: #1a202c;
-            color: white;
-            padding: 1.5rem 0;
-            text-align: center;
-            margin-top: auto; /* Pushes footer to the bottom */
-        }
-        .btn-primary {
-            background-color: #4299e1; /* Blue */
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            display: inline-block;
-        }
-        .btn-primary:hover {
-            background-color: #3182ce; /* Darker blue */
-            transform: translateY(-2px);
-        }
-        input[type="text"],
-        input[type="email"],
-        textarea {
-            width: 100%;
-            padding: 0.75rem;
-            margin-bottom: 1rem;
-            border: 1px solid #cbd5e0; /* Light gray border */
-            border-radius: 0.5rem;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease;
-        }
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #4299e1; /* Blue on focus */
-            box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.2);
-        }
-
-        /* Modal Styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-        .modal-content {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-            transform: translateY(-20px);
-            transition: transform 0.3s ease;
-        }
-        .modal-overlay.show .modal-content {
-            transform: translateY(0);
-        }
-        .close-button {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #666;
-        }
-        .close-button:hover {
-            color: #333;
-        }
-
-        /* Back to Top Button */
-        #back-to-top {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background-color: #4299e1;
-            color: white;
-            padding: 0.75rem 1rem;
-            border-radius: 9999px; /* Fully rounded */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 4-8px rgba(0, 0, 0, 0.2);
-            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.2s ease;
-            opacity: 0;
-            visibility: hidden;
-            z-index: 1500;
-        }
-        #back-to-top:hover {
-            background-color: #3182ce;
-            transform: translateY(-3px);
-        }
-        #back-to-top.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Loading Indicator */
-        #loading-indicator {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background-color: #4299e1;
-            z-index: 3000;
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease-in-out;
-        }
-        #loading-indicator.show {
-            transform: scaleX(1);
+            @apply text-blue-600 border-b-2 border-blue-600;
         }
     </style>
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="bg-gray-50 text-gray-800">
 
-    <!-- Loading Indicator -->
-    <div id="loading-indicator"></div>
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-md p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#home" class="text-2xl font-bold text-blue-700 rounded-md p-2 hover:bg-gray-100 transition duration-300">
+                DigitalMark
+            </a>
+            <div class="flex space-x-6">
+                <a href="#home" class="nav-link text-lg font-medium text-gray-700 hover:text-blue-600 transition duration-300 pb-1 rounded-md px-2" onclick="setActiveLink(this)">Home</a>
+                <a href="#services" class="nav-link text-lg font-medium text-gray-700 hover:text-blue-600 transition duration-300 pb-1 rounded-md px-2" onclick="setActiveLink(this)">Services</a>
+                <a href="#contact" class="nav-link text-lg font-medium text-gray-700 hover:text-blue-600 transition duration-300 pb-1 rounded-md px-2" onclick="setActiveLink(this)">Contact Us</a>
+            </div>
+        </div>
+    </nav>
 
-    <!-- Header -->
-    <header class="header">
-        <nav class="container flex justify-between items-center">
-            <div class="text-2xl font-bold rounded-lg p-2">DigitalMarkPro</div>
-            <ul class="flex">
-                <li><a href="#" class="nav-link active" data-page="landing">Home</a></li>
-                <li><a href="#" class="nav-link" data-page="services">Services</a></li>
-                <li><a href="#" class="nav-link" data-page="contact">Contact Us</a></li>
-            </ul>
-        </nav>
-    </header>
+    <!-- Landing Page (Home Section) -->
+    <section id="home" class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600 text-white py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight mb-6 rounded-lg p-2 bg-white bg-opacity-10 shadow-lg">
+                Elevate Your Brand Online
+            </h1>
+            <p class="text-xl sm:text-2xl mb-10 opacity-90 rounded-md p-2">
+                We craft data-driven digital strategies to boost your visibility, engagement, and conversions.
+            </p>
+            <a href="#services" class="inline-block bg-white text-blue-700 hover:bg-gray-100 transition duration-300 font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105">
+                Explore Our Services
+            </a>
+        </div>
+    </section>
 
-    <!-- Main Content Area -->
-    <main id="main-content" class="main-content container flex-grow">
-        <!-- Content will be loaded here by JavaScript -->
-    </main>
+    <!-- Services Page (Services Section) -->
+    <section id="services" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold text-center text-gray-900 mb-12 rounded-md p-2">Our Services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service Card 1: SEO -->
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                    <div class="text-blue-500 mb-4 text-5xl text-center">
+                        &#128269; <!-- Magnifying Glass Emoji -->
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4 text-center">Search Engine Optimization (SEO)</h3>
+                    <p class="text-gray-700 leading-relaxed text-center">
+                        Improve your search engine rankings and drive organic traffic with our expert SEO strategies. We focus on keywords, content, and technical optimization.
+                    </p>
+                </div>
+
+                <!-- Service Card 2: Social Media Marketing -->
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                    <div class="text-purple-500 mb-4 text-5xl text-center">
+                        &#128172; <!-- Speech Balloon Emoji -->
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4 text-center">Social Media Marketing</h3>
+                    <p class="text-gray-700 leading-relaxed text-center">
+                        Build a strong social presence, engage your audience, and grow your brand across all major platforms.
+                    </p>
+                </div>
+
+                <!-- Service Card 3: Content Marketing -->
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                    <div class="text-green-500 mb-4 text-5xl text-center">
+                        &#128221; <!-- Memo Emoji -->
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4 text-center">Content Marketing</h3>
+                    <p class="text-gray-700 leading-relaxed text-center">
+                        Create valuable, relevant content that attracts, engages, and converts your target audience. From blogs to videos, we've got you covered.
+                    </p>
+                </div>
+
+                <!-- Service Card 4: Pay-Per-Click (PPC) Advertising -->
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                    <div class="text-red-500 mb-4 text-5xl text-center">
+                        &#128176; <!-- Money Bag Emoji -->
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4 text-center">Pay-Per-Click (PPC) Advertising</h3>
+                    <p class="text-gray-700 leading-relaxed text-center">
+                        Maximize your ROI with targeted PPC campaigns on Google Ads, social media, and other platforms.
+                    </p>
+                </div>
+
+                <!-- Service Card 5: Email Marketing -->
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                    <div class="text-yellow-500 mb-4 text-5xl text-center">
+                        &#128231; <!-- Envelope Emoji -->
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4 text-center">Email Marketing</h3>
+                    <p class="text-gray-700 leading-relaxed text-center">
+                        Build strong customer relationships and drive sales through effective email campaigns, from newsletters to automated sequences.
+                    </p>
+                </div>
+
+                <!-- Service Card 6: Web Design & Development -->
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                    <div class="text-indigo-500 mb-4 text-5xl text-center">
+                        &#128187; <!-- Laptop Emoji -->
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4 text-center">Web Design & Development</h3>
+                    <p class="text-gray-700 leading-relaxed text-center">
+                        Create stunning, user-friendly, and conversion-optimized websites that represent your brand effectively.
+                    </p>
+                </div>
+            </div>
+            <!-- Download Brochure Button -->
+            <div class="text-center mt-12">
+                <a href="./digital marketing.pdf" download class="inline-block bg-blue-600 text-white hover:bg-blue-700 transition duration-300 font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105">
+                    Download Our Brochure
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Page (Contact Section) -->
+    <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+        <div class="container mx-auto max-w-2xl">
+            <h2 class="text-4xl font-bold text-center mb-12 rounded-md p-2">Get in Touch</h2>
+            <div class="bg-white p-8 rounded-xl shadow-lg text-gray-800">
+                <p class="text-center text-lg mb-6">
+                    Have a project in mind or just want to say hello? Fill out the form below or reach out directly!
+                </p>
+                <form class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-lg font-medium text-gray-700 mb-2">Name</label>
+                        <input type="text" id="name" name="name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-200" placeholder="Your Name" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-lg font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" id="email" name="email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-200" placeholder="your.email@example.com" required>
+                    </div>
+                    <div>
+                        <label for="message" class="block text-lg font-medium text-gray-700 mb-2">Message</label>
+                        <textarea id="message" name="message" rows="5" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-200" placeholder="Tell us about your project or inquiry..." required></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md transform hover:scale-105">
+                        Send Message
+                    </button>
+                </form>
+
+                <div class="mt-10 text-center border-t border-gray-200 pt-8">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">Or Find Us Here:</h3>
+                    <p class="text-lg text-gray-700 mb-2">
+                        <strong class="text-blue-600">Email:</strong> info@digitalmark.com
+                    </p>
+                    <p class="text-lg text-gray-700 mb-2">
+                        <strong class="text-blue-600">Phone:</strong> +1 (555) 123-4567
+                    </p>
+                    <p class="text-lg text-gray-700">
+                        <strong class="text-blue-600">Address:</strong> 123 Digital Way, Marketing City, DM 90210
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 DigitalMarkPro. All rights reserved.</p>
+    <footer class="bg-gray-900 text-white py-8 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto text-center text-sm">
+            <p>&copy; 2025 DigitalMark. All rights reserved.</p>
+            <div class="mt-4 flex justify-center space-x-4">
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a>
+                <span class="text-gray-600">|</span>
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300">Terms of Service</a>
+            </div>
         </div>
     </footer>
 
-    <!-- Thank You Modal -->
-    <div id="thank-you-modal" class="modal-overlay">
-        <div class="modal-content relative">
-            <button class="close-button" onclick="closeModal('thank-you-modal')">&times;</button>
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">Thank You!</h2>
-            <p class="text-lg text-gray-700 mb-6">Your message has been successfully sent. We will get back to you shortly.</p>
-            <button class="btn-primary" onclick="closeModal('thank-you-modal')">Close</button>
-        </div>
-    </div>
-
-    <!-- Inquiry Form Modal -->
-    <div id="inquiry-modal" class="modal-overlay">
-        <div class="modal-content relative">
-            <button class="close-button" onclick="closeModal('inquiry-modal')">&times;</button>
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">Inquire About Our Services</h2>
-            <p class="text-lg text-gray-700 mb-6">Tell us about your needs, and we'll get in touch!</p>
-            <form id="inquiry-form" onsubmit="handleFormSubmission(event, 'inquiry-modal')">
-                <div class="mb-4">
-                    <label for="inquiry-name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
-                    <input type="text" id="inquiry-name" name="name" placeholder="Your Name" required class="rounded-lg">
-                </div>
-                <div class="mb-4">
-                    <label for="inquiry-email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
-                    <input type="email" id="inquiry-email" name="email" placeholder="your.email@example.com" required class="rounded-lg">
-                </div>
-                <div class="mb-4">
-                    <label for="inquiry-message" class="block text-gray-700 text-sm font-bold mb-2">Message:</label>
-                    <textarea id="inquiry-message" name="message" rows="5" placeholder="Tell us about your project or questions..." required class="rounded-lg"></textarea>
-                </div>
-                <button type="submit" class="btn-primary w-full">Submit Inquiry</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Back to Top Button -->
-    <button id="back-to-top" aria-label="Back to top">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-    </button>
-
     <script>
-        // --- Google Analytics Simulation ---
-        function gtag(command, eventName, eventParams) {
-            console.log(`[GA Simulation] Command: ${command}, Event: ${eventName}, Params:`, eventParams);
-        }
+        // Function to set the active navigation link based on the current section in view
+        function setActiveLinkOnScroll() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            let currentSectionId = 'home'; // Default to home
 
-        // --- Page Content Definitions ---
-        const pageContent = {
-            landing: `
-                <section class="text-center py-12">
-                    <h1 class="text-5xl font-extrabold text-gray-900 mb-4">Elevate Your Brand Online</h1>
-                    <p class="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">
-                        We are a leading digital marketing agency dedicated to helping businesses thrive in the digital landscape.
-                        From SEO to social media, we've got you covered.
-                    </p>
-                    <a href="javascript:void(0)" class="btn-primary track-cta" data-cta-name="Learn More Home" onclick="trackCTA('Learn More Home'); showModal('inquiry-modal');">Learn More About Our Services</a>
-                </section>
-
-                <section class="py-12 bg-gray-50 rounded-lg p-6 mt-8">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Why Choose Us?</h2>
-                    <div class="grid md:grid-cols-3 gap-8">
-                        <div class="text-center p-4 bg-white rounded-lg shadow-md">
-                            <h3 class="text-xl font-semibold mb-2">Expert Team</h3>
-                            <p class="text-gray-600">Our specialists bring years of experience and innovative strategies to the table.</p>
-                        </div>
-                        <div class="text-center p-4 bg-white rounded-lg shadow-md">
-                            <h3 class="text-xl font-semibold mb-2">Proven Results</h3>
-                            <p class="text-gray-600">We focus on data-driven approaches to deliver measurable success for our clients.</p>
-                        </div>
-                        <div class="text-center p-4 bg-white rounded-lg shadow-md">
-                            <h3 class="text-xl font-semibold mb-2">Custom Solutions</h3>
-                            <p class="text-gray-600">Every business is unique, and so are our tailored marketing plans.</p>
-                        </div>
-                    </div>
-                </section>
-            `,
-            services: `
-                <section class="py-8">
-                    <h1 class="text-4xl font-bold text-gray-900 mb-8 text-center">Our Digital Marketing Services</h1>
-                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-2xl font-semibold text-gray-800 mb-3">Search Engine Optimization (SEO)</h3>
-                            <p class="text-gray-700 mb-4">Improve your search engine rankings and drive organic traffic to your website.</p>
-                            <a href="javascript:void(0)" class="btn-primary track-cta" data-cta-name="SEO Details" onclick="trackCTA('SEO Details'); loadPage('services', 'download-section');">Learn More</a>
-                        </div>
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-2xl font-semibold text-gray-800 mb-3">Social Media Marketing</h3>
-                            <p class="text-gray-700 mb-4">Engage your audience, build brand awareness, and generate leads on social platforms.</p>
-                            <a href="javascript:void(0)" class="btn-primary track-cta" data-cta-name="SMM Details" onclick="trackCTA('SMM Details'); loadPage('services', 'download-section');">Learn More</a>
-                        </div>
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-2xl font-semibold text-gray-800 mb-3">Pay-Per-Click (PPC) Advertising</h3>
-                            <p class="text-gray-700 mb-4">Maximize your ROI with targeted ad campaigns on Google, Bing, and social channels.</p>
-                            <a href="javascript:void(0)" class="btn-primary track-cta" data-cta-name="PPC Details" onclick="trackCTA('PPC Details'); loadPage('services', 'download-section');">Learn More</a>
-                        </div>
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-2xl font-semibold text-gray-800 mb-3">Content Marketing</h3>
-                            <p class="text-gray-700 mb-4">Create compelling content that attracts, engages, and converts your target audience.</p>
-                            <a href="javascript:void(0)" class="btn-primary track-cta" data-cta-name="Content Marketing Details" onclick="trackCTA('Content Marketing Details'); loadPage('services', 'download-section');">Learn More</a>
-                        </div>
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-2xl font-semibold text-gray-800 mb-3">Email Marketing</h3>
-                            <p class="text-gray-700 mb-4">Build strong customer relationships and drive sales with effective email campaigns.</p>
-                            <a href="javascript:void(0)" class="btn-primary track-cta" data-cta-name="Email Marketing Details" onclick="trackCTA('Email Marketing Details'); loadPage('services', 'download-section');">Learn More</a>
-                        </div>
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-2xl font-semibold text-gray-800 mb-3">Web Design & Development</h3>
-                            <p class="text-gray-700 mb-4">Craft stunning, user-friendly websites optimized for performance and conversions.</p>
-                            <a href="javascript:void(0)" class="btn-primary track-cta" data-cta-name="Web Design Details" onclick="trackCTA('Web Design Details'); loadPage('services', 'download-section');">Learn More</a>
-                        </div>
-                    </div>
-                </section>
-                <section id="download-section" class="py-8 text-center">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Download Our Full Brochure</h2>
-                    <p class="text-lg text-gray-700 mb-6">Get detailed information about all our services in one comprehensive document.</p>
-                    <a href="uploaded:digital marketing.pdf" target="_blank" class="btn-primary track-download" data-download-name="Company Brochure" onclick="trackDownload('Company Brochure')">Download Brochure (PDF)</a>
-                </section>
-            `,
-            contact: `
-                <section class="py-8">
-                    <h1 class="text-4xl font-bold text-gray-900 mb-8 text-center">Contact Us</h1>
-                    <div class="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-md">
-                        <p class="text-lg text-gray-700 mb-6 text-center">
-                            Have questions or ready to start your digital journey? Fill out the form below!
-                        </p>
-                        <form id="contact-form" onsubmit="handleFormSubmission(event, 'contact-form')">
-                            <div class="mb-4">
-                                <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
-                                <input type="text" id="name" name="name" placeholder="Your Name" required class="rounded-lg">
-                            </div>
-                            <div class="mb-4">
-                                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
-                                <input type="email" id="email" name="email" placeholder="your.email@example.com" required class="rounded-lg">
-                            </div>
-                            <div class="mb-4">
-                                <label for="message" class="block text-gray-700 text-sm font-bold mb-2">Message:</label>
-                                <textarea id="message" name="message" rows="5" placeholder="Your message..." required class="rounded-lg"></textarea>
-                            </div>
-                            <button type="submit" class="btn-primary w-full">Send Message</button>
-                        </form>
-                    </div>
-                </section>
-            `
-        };
-
-        const mainContentDiv = document.getElementById('main-content');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const thankYouModal = document.getElementById('thank-you-modal');
-        const inquiryModal = document.getElementById('inquiry-modal'); // New inquiry modal
-        const backToTopBtn = document.getElementById('back-to-top');
-        const loadingIndicator = document.getElementById('loading-indicator');
-        let currentPagePath = '/'; // Simulate current page path
-
-        // --- Page Navigation Logic ---
-        function loadPage(pageName, scrollToId = null) {
-            console.log(`[Page Load] Loading page: ${pageName}`);
-
-            // Show loading indicator
-            loadingIndicator.classList.add('show');
-            mainContentDiv.classList.remove('show'); // Hide content for fade out
-
-            setTimeout(() => { // Simulate a small delay for content loading
-                mainContentDiv.innerHTML = pageContent[pageName];
-                currentPagePath = `/${pageName}`; // Update simulated page path
-
-                // Update active navigation link
-                navLinks.forEach(link => {
-                    if (link.dataset.page === pageName) {
-                        link.classList.add('active');
-                    } else {
-                        link.classList.remove('active');
-                    }
-                });
-
-                // Simulate page view for GA
-                gtag('event', 'page_view', {
-                    page_path: currentPagePath,
-                    page_title: document.title + ' - ' + pageName.charAt(0).toUpperCase() + pageName.slice(1)
-                });
-
-                // Re-attach event listeners for scroll depth after content loads
-                attachScrollDepthListener();
-
-                // Scroll to specific ID if provided, otherwise scroll to top
-                if (scrollToId) {
-                    const targetElement = document.getElementById(scrollToId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    } else {
-                        console.warn(`Element with ID '${scrollToId}' not found on page '${pageName}'.`);
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }
-                } else {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-
-
-                // Hide loading indicator and show content with fade-in
-                loadingIndicator.classList.remove('show');
-                mainContentDiv.classList.add('show');
-            }, 300); // Small delay for visual effect
-        }
-
-        // --- Event Tracking Functions ---
-
-        // Track CTA Clicks (using Click Classes and Click Text)
-        function trackCTA(ctaName) {
-            gtag('event', 'cta_click', {
-                event_category: 'Engagement',
-                event_label: ctaName,
-                page_path: currentPagePath
-            });
-        }
-
-        // Track Form Submissions
-        function handleFormSubmission(event, formId) {
-            event.preventDefault(); // Prevent default form submission
-            const form = event.target;
-            const name = form.name.value;
-            const email = form.email.value;
-            const message = form.message.value;
-
-            // Simulate form submission success
-            console.log(`Form submitted! Name: ${name}, Email: ${email}, Message: ${message}`);
-
-            gtag('event', 'form_submission', {
-                event_category: 'Lead Generation',
-                event_label: formId === 'contact-form' ? 'Contact Us Form' : 'Inquiry Form',
-                form_name: formId,
-                page_path: currentPagePath,
-                // You might send more data here, but be mindful of PII
-                // user_name: name,
-                // user_email: email
-            });
-
-            form.reset(); // Clear the form
-            closeModal(formId === 'contact-form' ? 'contact-modal' : 'inquiry-modal'); // Close the specific form modal
-            showModal('thank-you-modal'); // Show the thank you modal
-        }
-
-        // Show/Hide Modal
-        function showModal(modalId) {
-            document.getElementById(modalId).classList.add('show');
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('show');
-        }
-
-
-        // Track Downloads (using Click Classes)
-        function trackDownload(fileName) {
-            gtag('event', 'file_download', {
-                event_category: 'Engagement',
-                event_label: fileName,
-                file_extension: 'pdf', // Changed to PDF
-                page_path: currentPagePath
-            });
-            // The actual download is now handled by the href attribute of the anchor tag.
-            console.log(`Initiating download of: ${fileName}`);
-        }
-
-        // --- Scroll Depth Tracking ---
-        let scrollDepthThresholds = [25, 50, 75, 100];
-        let scrolledDepths = new Set(); // To ensure events fire only once per threshold
-
-        function trackScrollDepth() {
-            const documentHeight = document.documentElement.scrollHeight;
-            const viewportHeight = window.innerHeight;
-            const scrollTop = window.scrollY;
-
-            // Calculate current scroll percentage
-            if (documentHeight === viewportHeight) {
-                // If content fits entirely in viewport, consider it 100% scrolled
-                if (!scrolledDepths.has(100)) {
-                    gtag('event', 'scroll_depth', {
-                        event_category: 'Engagement',
-                        event_label: '100% Scrolled',
-                        scroll_percentage: 100,
-                        page_path: currentPagePath
-                    });
-                    scrolledDepths.add(100);
-                }
-                return;
-            }
-
-            const scrollPercentage = Math.min(100, Math.round((scrollTop + viewportHeight) / documentHeight * 100));
-
-            scrollDepthThresholds.forEach(threshold => {
-                if (scrollPercentage >= threshold && !scrolledDepths.has(threshold)) {
-                    gtag('event', 'scroll_depth', {
-                        event_category: 'Engagement',
-                        event_label: `${threshold}% Scrolled`,
-                        scroll_percentage: threshold,
-                        page_path: currentPagePath
-                    });
-                    scrolledDepths.add(threshold);
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - document.querySelector('nav').offsetHeight; // Adjust for sticky header
+                const sectionBottom = sectionTop + section.offsetHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
+                    currentSectionId = section.id;
                 }
             });
 
-            // Show/hide back to top button based on scroll position
-            if (scrollTop > (viewportHeight / 2)) { // Show after scrolling half a viewport
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
-            }
-        }
-
-        // Attach scroll listener
-        function attachScrollDepthListener() {
-            scrolledDepths.clear(); // Reset for new page content
-            window.removeEventListener('scroll', trackScrollDepth); // Remove old listener if any
-            window.addEventListener('scroll', trackScrollDepth);
-            // Fire initial scroll check in case page is already scrolled or very short
-            trackScrollDepth();
-        }
-
-        // --- Initialization ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // Load the landing page by default
-            loadPage('landing');
-
-            // Add event listeners for navigation
             navLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const page = e.target.dataset.page;
-                    loadPage(page);
-                });
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + currentSectionId) {
+                    link.classList.add('active');
+                }
             });
+        }
 
-            // Add event listener for back to top button
-            backToTopBtn.addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Function to set active link when clicked
+        function setActiveLink(clickedLink) {
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
             });
+            clickedLink.classList.add('active');
+        }
 
-            // Initial scroll depth listener attachment
-            attachScrollDepthListener();
+        // Add event listeners for scroll and initial load
+        window.addEventListener('scroll', setActiveLinkOnScroll);
+        window.addEventListener('load', () => {
+            setActiveLinkOnScroll(); // Set active link on initial load
+            // Smooth scroll to the section if a hash is present in the URL
+            if (window.location.hash) {
+                const targetSection = document.querySelector(window.location.hash);
+                if (targetSection) {
+                    const navHeight = document.querySelector('nav').offsetHeight;
+                    window.scrollTo({
+                        top: targetSection.offsetTop - navHeight,
+                        behavior: 'smooth'
+                    });
+                }
+            }
         });
-
-        // Ensure scroll depth is tracked on window resize as well
-        window.addEventListener('resize', attachScrollDepthListener);
-
     </script>
 </body>
 </html>
